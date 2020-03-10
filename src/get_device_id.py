@@ -12,6 +12,11 @@ import array
 import getopt
 import sys
 
+
+#Inmport path
+sys.path.append('../src')
+from aardvark_initial import *
+
 #Inmport path
 sys.path.append('../')
 from os_parameters_define import *
@@ -140,7 +145,7 @@ def parameter_check(parameter):
 ## _Main_ ##
 
 # Initial aardvark
-ipmi = aardvark_ipmi_init(target_me_addr, target_me_bridge_channel)
+#ipmi = aardvark_ipmi_init(target_me_addr, target_me_bridge_channel)
 
 # Check delay time parameter
 sts = parameter_check(sys.argv)
