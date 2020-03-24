@@ -457,7 +457,8 @@ get_temp_4bh_extended              = 1
 # 4BH:byte5~byte20
 get_temp_4bh_channel_all          = '0xFF'
 get_temp_4bh_channel_none         = '0'
-
+#EAH:Byte4[3:0] : Domain
+eah_platform_domain      = 0
 
 
 

@@ -335,6 +335,24 @@ def c9h_raw_to_str_py( domain, policy_trigger_type, policy_type, power_domain):
      return netfun, c9h_raw     
 
 
+## Function : Converter EAh cmd to str format
+##            domain = 0 platform domain
+def eah_raw_to_str_py(  domain ):
+     netfun  = 0x2e
+     cmd     = ' 0xea '
+     manufacture_id = INTEL_MANUFACTURE_ID
+     # Setup byte4 : Domain ID, bits[3:0]
+     domain = domain
+     # Conbine for byte4
+     byte4 = int_to_hex_string(domain)
+     # Setup eah_raw
+     eah_raw = [ cmd, '0x57','0x01','0x00', byte4 ]
+
+     return netfun, eah_raw
+
+
+
+
 ## Function : Converter 6Ah cmd to str format
 ##            
 ##            Total request 10bytes
