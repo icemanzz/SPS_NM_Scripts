@@ -483,7 +483,7 @@ def get_sensor_reading_py(ipmi, sensor_number):
 ## Function : 0xF4H, Get PMbus device configuraton
 def f4h_get_pmbus_device_config_py(ipmi, f4h_index ):
      netfn, f4h_raw = f4h_raw_to_str_py( f4h_index)
-     # Send 0xEAh to ME
+     # Send 0xf4h to ME
      rsp = send_ipmb_aardvark(ipmi , netfn , f4h_raw )
      # Check if rsp data correct
      sts = ipmi_resp_analyst_py( ord(rsp[0]), OEM )
@@ -510,3 +510,26 @@ def f4h_get_pmbus_device_config_py(ipmi, f4h_index ):
 
      return sts, smbus_addr, mux_addr, device_state, device_mode, device_type
 
+
+## Function : 0xF5H, Get PMbus Reading
+def f5h_get_pmbus_device_config_py(ipmi, f5h_index , f5h_page, f5_offset ):
+     netfn, f5h_raw = f5h_raw_to_str_py( f5h_index , f5h_page, f5_offset )
+     # Send 0xf5h to ME
+     rsp = send_ipmb_aardvark(ipmi , netfn , f5h_raw )
+     # Check if rsp data correct
+     sts = ipmi_resp_analyst_py( ord(rsp[0]), OEM )
+     if(sts != SUCCESSFUL ):
+         return ERROR, ERROR, ERROR, ERROR, ERROR, ERROR
+
+     # Analyst get pmbus reading response data format
+     timestamp = calculate_byte_value_py(rsp, 5, 4)
+     DEBUG('get_pmbus_reading : timestamp = %x' %timestamp)
+     # Check the response data lenth
+     length = len(rsp) - 8
+     # setup register 0
+     register = calculate_byte_value_py(rsp, 9, 1)
+     DEBUG('get_pmbus_reading : register = %x' %register)
+
+     sts = PASS
+
+     return sts, timestamp, length , register

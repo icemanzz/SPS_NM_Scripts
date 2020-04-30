@@ -368,6 +368,28 @@ def f4h_raw_to_str_py(  index ):
      return netfun, f4h_raw
 
 
+## Function : Converter F4h cmd to str format
+##            index = device index (XML file => SDR => User Device ID in each sensors)
+def f5h_raw_to_str_py(  index , page, offset ):
+     netfun  = 0x2e
+     cmd     = ' 0xf5 '
+     manufacture_id = INTEL_MANUFACTURE_ID
+     # Setup byte4 : Device Index, bits[4:0]
+     index = index
+     # Conbine for byte4
+     byte4 = int_to_hex_string(index)
+     # Setup byte5 : page =bit[7:4], History=bit[3:0] = 0xF
+     page =  bit_shift_left(page , 4)
+     history = bit_shift_left( 0x0f, 0)
+     #conbine for byte5
+     byte5 = int_to_hex_string( page | history )
+     # Setup byte6 : offset
+     byte6 = int_to_hex_string(offset)
+     # Setup f4h_raw
+     f5h_raw = [ cmd, '0x57','0x01','0x00', byte4 ,byte5, byte6 ]
+
+     return netfun, f5h_raw
+
 
 ## Function : Converter 6Ah cmd to str format
 ##            

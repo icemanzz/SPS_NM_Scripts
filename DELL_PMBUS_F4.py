@@ -30,6 +30,7 @@ from nm_functions_libs import *
 ## _Main_ ##
 print 'Start to Test DELL PMbus Device Config Check...'
 
+## Please config below table base on Dell XML SDR settings
 DELL_PMBUS_USER_INDEX = [ 0x00, 0x01, 0x04, 0x05 , 0x08, 0x09 ]
 
 
