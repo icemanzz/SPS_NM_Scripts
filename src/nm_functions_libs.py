@@ -480,3 +480,33 @@ def get_sensor_reading_py(ipmi, sensor_number):
 
 
 
+## Function : 0xF4H, Get PMbus device configuraton
+def f4h_get_pmbus_device_config_py(ipmi, f4h_index ):
+     netfn, f4h_raw = f4h_raw_to_str_py( f4h_index)
+     # Send 0xEAh to ME
+     rsp = send_ipmb_aardvark(ipmi , netfn , f4h_raw )
+     # Check if rsp data correct
+     sts = ipmi_resp_analyst_py( ord(rsp[0]), OEM )
+     if(sts != SUCCESSFUL ):
+         return ERROR, ERROR, ERROR, ERROR, ERROR, ERROR
+
+     # Analyst get pmbus device configuarotn response data format
+     smbus_addr = calculate_byte_value_py(rsp, 5, 1)
+     DEBUG('get_pmbus_device_config : smbus_addr = %x' %smbus_addr)
+
+     mux_addr = get_bits_data_py( ord(rsp[5]) , 0 , 6)
+     DEBUG('get_pmbus_device_config : mux_addr = %x' %mux_addr)
+
+     device_state = get_bits_data_py( ord(rsp[5]) , 6 , 1)
+     DEBUG('get_pmbus_device_config : device_state = %d' %device_state)
+
+     device_mode = get_bits_data_py( ord(rsp[5]) , 7 , 1)
+     DEBUG('get_pmbus_device_config : device_mode = %d' %device_mode)
+
+     device_type = get_bits_data_py( ord(rsp[6]) , 0 , 4)
+     DEBUG('get_pmbus_device_config : device_type = %x' %mux_addr)
+
+     sts = PASS
+
+     return sts, smbus_addr, mux_addr, device_state, device_mode, device_type
+

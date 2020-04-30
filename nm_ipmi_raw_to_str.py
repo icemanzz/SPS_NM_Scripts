@@ -352,6 +352,22 @@ def eah_raw_to_str_py(  domain ):
 
 
 
+## Function : Converter F4h cmd to str format
+##            index = device index (XML file => SDR => User Device ID in each sensors)
+def f4h_raw_to_str_py(  index ):
+     netfun  = 0x2e
+     cmd     = ' 0xf4 '
+     manufacture_id = INTEL_MANUFACTURE_ID
+     # Setup byte4 : Device Index, bits[4:0]
+     index = index
+     # Conbine for byte4
+     byte4 = int_to_hex_string(index)
+     # Setup f4h_raw
+     f4h_raw = [ cmd, '0x57','0x01','0x00', byte4 ]
+
+     return netfun, f4h_raw
+
+
 
 ## Function : Converter 6Ah cmd to str format
 ##            
