@@ -34,7 +34,7 @@ print 'Start to Test DELL PMbus Device Reading Check...'
 DELL_PMBUS_USER_INDEX = [ 0x00, 0x04, 0x05 , 0x08, 0x09 ]
 
 
-print('User_ID | timestamp | length | register | \n' )
+print('User_ID | timestamp | length | register | ' )
 
 for i in range(0, len(DELL_PMBUS_USER_INDEX)):
 
